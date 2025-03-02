@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
 class Tetrominos {
   // テトロミノの形状定義
@@ -49,12 +50,12 @@ class Tetrominos {
 
   // テトロミノの色定義
   static const List<Color> colors = [
-    Color(0xFF00CED1), // I - ターコイズ
-    Color(0xFFFFD700), // O - ゴールド
-    Color(0xFF9370DB), // T - ミディアムパープル
-    Color(0xFFFF8C00), // L - ダークオレンジ
-    Color(0xFF1E90FF), // J - ドジャーブルー
-    Color(0xFF32CD32), // S - ライムグリーン
-    Color(0xFFFF4500), // Z - オレンジレッド
+    AppColors.tetrisI, // I - ターコイズ
+    AppColors.tetrisO, // O - ゴールド
+    AppColors.tetrisT, // T - ミディアムパープル
+    AppColors.tetrisL, // L - ダークオレンジ
+    AppColors.tetrisJ, // J - ドジャーブルー
+    AppColors.tetrisS, // S - ライムグリーン
+    AppColors.tetrisZ, // Z - オレンジレッド
   ];
 }

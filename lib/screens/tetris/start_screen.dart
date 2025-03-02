@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../constants/colors.dart';
 import 'game_screen.dart';
 
-class StartScreen extends StatelessWidget {
-  const StartScreen({Key? key}) : super(key: key);
+class TetrisStartScreen extends StatelessWidget {
+  const TetrisStartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +26,20 @@ class StartScreen extends StatelessWidget {
           ],
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFF0F3460),
+        backgroundColor: AppColors.primaryColor,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFF1A1A2E), Color(0xFF16213E)],
+            colors: [AppColors.backgroundColor, AppColors.backgroundColorDark],
           ),
         ),
         child: Center(
@@ -99,9 +106,9 @@ class StartScreen extends StatelessWidget {
               // ゲーム開始ボタン
               ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const GameScreen(),
+                      builder: (context) => const TetrisGameScreen(),
                     ),
                   );
                 },
@@ -111,7 +118,7 @@ class StartScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFE94560),
+                  backgroundColor: AppColors.accentColor,
                   foregroundColor: Colors.white,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 15),

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../models/game_state.dart';
-import '../services/game_service.dart';
-import '../painters/tetris_painter.dart';
-import '../constants/tetrominos.dart';
-import 'start_screen.dart';
+import '../../models/tetris/game_state.dart';
+import '../../services/tetris/game_service.dart';
+import '../../painters/tetris/tetris_painter.dart';
+import '../../constants/tetrominos.dart';
+import '../../constants/colors.dart';
 
-class GameScreen extends StatefulWidget {
-  const GameScreen({Key? key}) : super(key: key);
+class TetrisGameScreen extends StatefulWidget {
+  const TetrisGameScreen({Key? key}) : super(key: key);
 
   @override
-  _GameScreenState createState() => _GameScreenState();
+  _TetrisGameScreenState createState() => _TetrisGameScreenState();
 }
 
-class _GameScreenState extends State<GameScreen> {
+class _TetrisGameScreenState extends State<TetrisGameScreen> {
   late GameState gameState;
   late GameService gameService;
   final FocusNode _focusNode = FocusNode();
@@ -45,11 +45,7 @@ class _GameScreenState extends State<GameScreen> {
   // スタート画面に戻る
   void returnToStartScreen() {
     gameState.gameTimer?.cancel();
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const StartScreen(),
-      ),
-    );
+    Navigator.of(context).pop();
   }
 
   @override
@@ -103,7 +99,7 @@ class _GameScreenState extends State<GameScreen> {
             ],
           ),
           centerTitle: true,
-          backgroundColor: const Color(0xFF0F3460),
+          backgroundColor: AppColors.primaryColor,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: returnToStartScreen,
@@ -122,7 +118,10 @@ class _GameScreenState extends State<GameScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0xFF1A1A2E), Color(0xFF16213E)],
+              colors: [
+                AppColors.backgroundColor,
+                AppColors.backgroundColorDark
+              ],
             ),
           ),
           child: SafeArea(
@@ -167,7 +166,7 @@ class _GameScreenState extends State<GameScreen> {
                         style: TextStyle(fontSize: 18),
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFE94560),
+                        backgroundColor: AppColors.accentColor,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 15),
@@ -215,12 +214,12 @@ class _GameScreenState extends State<GameScreen> {
       margin: const EdgeInsets.all(16.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: const Color(0xFF0F3460).withOpacity(0.7),
+        color: AppColors.primaryColor.withOpacity(0.7),
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Colors.black26,
-            offset: const Offset(0, 3),
+            offset: Offset(0, 3),
             blurRadius: 5,
           ),
         ],
@@ -244,13 +243,13 @@ class _GameScreenState extends State<GameScreen> {
         Container(
           margin: const EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
-            color: const Color(0xFF16213E),
+            color: AppColors.backgroundColorDark,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFF0F3460), width: 2),
+            border: Border.all(color: AppColors.primaryColor, width: 2),
             boxShadow: [
-              BoxShadow(
+              const BoxShadow(
                 color: Colors.black38,
-                offset: const Offset(0, 5),
+                offset: Offset(0, 5),
                 blurRadius: 10,
               ),
             ],
@@ -368,13 +367,13 @@ class _GameScreenState extends State<GameScreen> {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: const Color(0xFF16213E),
+            color: AppColors.backgroundColorDark,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFF0F3460), width: 2),
+            border: Border.all(color: AppColors.primaryColor, width: 2),
             boxShadow: [
-              BoxShadow(
+              const BoxShadow(
                 color: Colors.black38,
-                offset: const Offset(0, 3),
+                offset: Offset(0, 3),
                 blurRadius: 5,
               ),
             ],
@@ -395,7 +394,7 @@ class _GameScreenState extends State<GameScreen> {
                 height: 80,
                 width: 80,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1A1A2E),
+                  color: AppColors.backgroundColor,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Center(
@@ -420,13 +419,13 @@ class _GameScreenState extends State<GameScreen> {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: const Color(0xFF16213E),
+            color: AppColors.backgroundColorDark,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFF0F3460), width: 2),
-            boxShadow: [
+            border: Border.all(color: AppColors.primaryColor, width: 2),
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black38,
-                offset: const Offset(0, 3),
+                offset: Offset(0, 3),
                 blurRadius: 5,
               ),
             ],
@@ -458,8 +457,8 @@ class _GameScreenState extends State<GameScreen> {
                 child: LinearProgressIndicator(
                   value: (gameState.linesCleared % 10) / 10,
                   backgroundColor: Colors.blueGrey.shade800,
-                  valueColor:
-                      const AlwaysStoppedAnimation<Color>(Color(0xFFE94560)),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                      AppColors.accentColor),
                   borderRadius: BorderRadius.circular(5),
                 ),
               ),
@@ -567,7 +566,7 @@ class _GameScreenState extends State<GameScreen> {
               icon: const Icon(Icons.arrow_downward),
               label: const Text('一気に落とす'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFE94560),
+                backgroundColor: AppColors.accentColor,
                 foregroundColor: Colors.white,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
@@ -630,12 +629,12 @@ class _GameScreenState extends State<GameScreen> {
   Widget _controlButton(IconData icon, VoidCallback onPressed) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF0F3460),
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Colors.black26,
-            offset: const Offset(0, 2),
+            offset: Offset(0, 2),
             blurRadius: 5,
           ),
         ],

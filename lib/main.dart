@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/start_screen.dart';
+import 'constants/colors.dart';
+import 'screens/game_selection_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +13,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Tetris',
+      title: 'Flutter Games',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF1A1A2E),
+        scaffoldBackgroundColor: AppColors.backgroundColor,
         textTheme: const TextTheme(
           bodyMedium: TextStyle(color: Colors.white),
           bodyLarge:
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF0F3460),
+            backgroundColor: AppColors.primaryColor,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             shape: RoundedRectangleBorder(
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF0F3460),
+          backgroundColor: AppColors.primaryColor,
           elevation: 0,
           centerTitle: true,
           titleTextStyle: TextStyle(
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const StartScreen(),
+      home: const GameSelectionScreen(),
     );
   }
 }
