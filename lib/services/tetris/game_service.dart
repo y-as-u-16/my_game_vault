@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../../models/tetris/game_state.dart';
-import '../../constants/tetrominos.dart';
+import 'package:game_vault/constants/tetrominos.dart';
+import 'package:game_vault/models/tetris/game_state.dart';
 
 class GameService {
   final GameState gameState;

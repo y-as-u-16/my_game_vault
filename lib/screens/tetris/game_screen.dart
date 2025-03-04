@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../models/tetris/game_state.dart';
-import '../../services/tetris/game_service.dart';
-import '../../painters/tetris/tetris_painter.dart';
-import '../../constants/tetrominos.dart';
-import '../../constants/colors.dart';
+import 'package:game_vault/constants/colors.dart';
+import 'package:game_vault/constants/tetrominos.dart';
+import 'package:game_vault/models/tetris/game_state.dart';
+import 'package:game_vault/painters/tetris/tetris_painter.dart';
+import 'package:game_vault/services/tetris/game_service.dart';
 
 class TetrisGameScreen extends StatefulWidget {
   const TetrisGameScreen({Key? key}) : super(key: key);
