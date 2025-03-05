@@ -1,6 +1,6 @@
 {
-    "name": "my_tetris",
-    "short_name": "my_tetris",
+    "name": "game_vault",
+    "short_name": "game_vault",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
