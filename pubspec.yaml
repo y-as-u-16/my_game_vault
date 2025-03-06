@@ -12,13 +12,15 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.6
   flutter_launcher_icons: ^0.14.3
+  flutter_localizations:
+    sdk: flutter
 
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icon/app_icon.png"  # アイコンの場所
-  adaptive_icon_background: "#FFFFFF"  # Androidの背景色
-  adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"  # Androidの前景アイコン
+  image_path: "assets/icon/app_icon.png" # アイコンの場所
+  adaptive_icon_background: "#FFFFFF" # Androidの背景色
+  adaptive_icon_foreground: "assets/icon/app_icon_foreground.png" # Androidの前景アイコン
 
 dev_dependencies:
   flutter_test:

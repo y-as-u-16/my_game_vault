@@ -17,7 +17,7 @@ class GameSelectionScreen extends StatelessWidget {
             Icon(Icons.games, color: Colors.white.withOpacity(0.9)),
             const SizedBox(width: 10),
             const Text(
-              'Flutter Games',
+              'ゲームボールト',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,

@@ -16,7 +16,7 @@ class TetrisStartScreen extends StatelessWidget {
             Icon(Icons.games, color: Colors.white.withOpacity(0.9)),
             const SizedBox(width: 10),
             const Text(
-              'Flutter Tetris',
+              'テトリス',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,

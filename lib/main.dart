@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'constants/colors.dart';
 import 'screens/game_selection_screen.dart';
 
@@ -12,8 +13,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: const Locale('ja', 'JP'),
+      supportedLocales: const [
+        Locale('ja', 'JP'), // 日本語
+        Locale('en', 'US'), // 英語
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Games',
+      title: 'ゲームボールト',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         brightness: Brightness.dark,
