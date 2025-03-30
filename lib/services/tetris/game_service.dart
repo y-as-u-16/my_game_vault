@@ -215,6 +215,7 @@ class GameService {
   }
 
   // ライン消去
+  // ライン消去
   void clearLines() {
     List<int> linesToClear = [];
 
@@ -277,11 +278,23 @@ class GameService {
       });
     }
 
-    // 行を消去して上から詰める
-    for (int line in linesToClear.reversed) {
-      gameState.board.removeAt(line);
-      gameState.board.insert(0, List.filled(GameState.colCount, 0));
+    // 新しいボードを作成（消去行を除外）
+    List<List<int>> newBoard = [];
+
+    // 消去しない行だけを新しいボードに追加
+    for (int r = 0; r < GameState.rowCount; r++) {
+      if (!linesToClear.contains(r)) {
+        newBoard.add(List<int>.from(gameState.board[r]));
+      }
     }
+
+    // 消去した行数分の空行を上部に追加
+    for (int i = 0; i < clearedLines; i++) {
+      newBoard.insert(0, List.filled(GameState.colCount, 0));
+    }
+
+    // 新しいボードで更新
+    gameState.board = newBoard;
   }
 
   // 一気に落とす
