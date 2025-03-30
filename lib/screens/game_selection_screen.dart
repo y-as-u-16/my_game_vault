@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../constants/colors.dart';
-import '../widgets/game_card.dart';
-import '../screens/tetris/start_screen.dart';
+import 'package:game_vault/screens/tetris_start_screen.dart';
+import 'snake_game_screen.dart';
 
 class GameSelectionScreen extends StatelessWidget {
   const GameSelectionScreen({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class GameSelectionScreen extends StatelessWidget {
             Icon(Icons.games, color: Colors.white.withOpacity(0.9)),
             const SizedBox(width: 10),
             const Text(
-              'ゲームボールト',
+              'Flutter Game Vault',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.2,
@@ -27,131 +26,127 @@ class GameSelectionScreen extends StatelessWidget {
           ],
         ),
         centerTitle: true,
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: const Color(0xFF0F3460),
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.backgroundColor, AppColors.backgroundColorDark],
+            colors: [Color(0xFF1A1A2E), Color(0xFF16213E)],
           ),
         ),
-        child: SafeArea(
+        child: Center(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // タイトルセクション
-              Padding(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'ゲームを選択',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black.withOpacity(0.3),
-                            offset: const Offset(1, 1),
-                            blurRadius: 3,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      'お好みのゲームを選んでプレイしましょう',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white.withOpacity(0.7),
-                      ),
-                    ),
-                  ],
+              // ヘッダー
+              const Text(
+                'ゲームを選択',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 2,
                 ),
               ),
+              const SizedBox(height: 50),
 
-              // ゲーム一覧
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    children: [
-                      // テトリスゲーム
-                      GameCard(
-                        title: 'テトリス',
-                        description: 'ブロックを積み重ねて消すクラシックパズルゲーム',
-                        icon: Icons.grid_4x4,
-                        color: Colors.indigoAccent,
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const TetrisStartScreen(),
-                            ),
-                          );
-                        },
-                      ),
-                      
-                      // 今後追加予定のゲーム（プレースホルダー）
-                      GameCard(
-                        title: 'Coming Soon',
-                        description: '近日公開予定のゲーム',
-                        icon: Icons.hourglass_empty,
-                        color: Colors.grey.shade700,
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('このゲームは開発中です。お楽しみに！'),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
-                        },
-                      ),
-
-                      // 今後追加予定のゲーム（プレースホルダー）
-                      GameCard(
-                        title: 'Coming Soon',
-                        description: '近日公開予定のゲーム',
-                        icon: Icons.hourglass_empty,
-                        color: Colors.grey.shade700,
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('このゲームは開発中です。お楽しみに！'),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
-                        },
-                      ),
-
-                      // 今後追加予定のゲーム（プレースホルダー）
-                      GameCard(
-                        title: 'Coming Soon',
-                        description: '近日公開予定のゲーム',
-                        icon: Icons.hourglass_empty,
-                        color: Colors.grey.shade700,
-                        onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('このゲームは開発中です。お楽しみに！'),
-                              duration: Duration(seconds: 2),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+              // ゲーム選択ボタン
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildGameCard(
+                    context,
+                    'テトリス',
+                    Icons.grid_4x4,
+                    Colors.indigo.shade400,
+                    () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const TetrisStartScreen(),
+                        ),
+                      );
+                    },
                   ),
-                ),
+                  const SizedBox(width: 30),
+                  _buildGameCard(
+                    context,
+                    'スネーク',
+                    Icons.linear_scale,
+                    Colors.green.shade400,
+                    () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SnakeGameScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGameCard(BuildContext context, String title, IconData icon,
+      Color color, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 150,
+        height: 200,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: color.withOpacity(0.5), width: 2),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 60,
+              color: color,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 15),
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 8,
+              ),
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'プレイ',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants/colors.dart';
+import 'package:game_vault/constants/colors.dart';
 import 'game_screen.dart';
 
 class TetrisStartScreen extends StatelessWidget {

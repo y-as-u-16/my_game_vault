@@ -1,0 +1,24 @@
+.
+├── constants
+│   ├── colors.dart
+│   ├── snake_constants.dart
+│   └── tetrominos.dart
+├── models
+│   ├── game_state.dart
+│   └── snake_game_state.dart
+├── painters
+│   ├── snake_painter.dart
+│   └── tetris_painter.dart
+├── screens
+│   ├── game_screen.dart
+│   ├── game_selection_screen.dart
+│   ├── snake_game_screen.dart
+│   └── tetris_start_screen.dart
+├── services
+│   ├── game_service.dart
+│   └── snake_game_service.dart
+├── utils
+├── widgets
+│   └── game_card.dart
+├── .DS_Store
+└── main.dart

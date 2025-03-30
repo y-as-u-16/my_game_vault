@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'constants/colors.dart';
 import 'screens/game_selection_screen.dart';
 
 void main() {
@@ -13,22 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: const Locale('ja', 'JP'),
-      supportedLocales: const [
-        Locale('ja', 'JP'), // 日本語
-        Locale('en', 'US'), // 英語
-      ],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
       debugShowCheckedModeBanner: false,
-      title: 'ゲームボールト',
+      title: 'Flutter Game Vault',
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: AppColors.backgroundColor,
+        scaffoldBackgroundColor: const Color(0xFF1A1A2E),
         textTheme: const TextTheme(
           bodyMedium: TextStyle(color: Colors.white),
           bodyLarge:
@@ -38,7 +26,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primaryColor,
+            backgroundColor: const Color(0xFF0F3460),
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             shape: RoundedRectangleBorder(
@@ -49,7 +37,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: Color(0xFF0F3460),
           elevation: 0,
           centerTitle: true,
           titleTextStyle: TextStyle(
