@@ -50,11 +50,11 @@ class _TetrisGameScreenState extends State<TetrisGameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RawKeyboardListener(
+    return KeyboardListener(
       focusNode: _focusNode,
       autofocus: true,
-      onKey: (RawKeyEvent event) {
-        if (event is RawKeyDownEvent) {
+      onKeyEvent: (KeyEvent event) {
+        if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
             gameService.moveLeft();
           } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
@@ -89,7 +89,7 @@ class _TetrisGameScreenState extends State<TetrisGameScreen> {
               Icon(Icons.games, color: Colors.white.withOpacity(0.9)),
               const SizedBox(width: 10),
               const Text(
-                'Flutter Tetris',
+                'テトリス',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
@@ -216,8 +216,8 @@ class _TetrisGameScreenState extends State<TetrisGameScreen> {
       decoration: BoxDecoration(
         color: AppColors.primaryColor.withOpacity(0.7),
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black26,
             offset: Offset(0, 3),
             blurRadius: 5,
@@ -246,8 +246,8 @@ class _TetrisGameScreenState extends State<TetrisGameScreen> {
             color: AppColors.backgroundColorDark,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: AppColors.primaryColor, width: 2),
-            boxShadow: [
-              const BoxShadow(
+            boxShadow: const [
+              BoxShadow(
                 color: Colors.black38,
                 offset: Offset(0, 5),
                 blurRadius: 10,
@@ -370,8 +370,8 @@ class _TetrisGameScreenState extends State<TetrisGameScreen> {
             color: AppColors.backgroundColorDark,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: AppColors.primaryColor, width: 2),
-            boxShadow: [
-              const BoxShadow(
+            boxShadow: const [
+              BoxShadow(
                 color: Colors.black38,
                 offset: Offset(0, 3),
                 blurRadius: 5,
@@ -467,58 +467,6 @@ class _TetrisGameScreenState extends State<TetrisGameScreen> {
         ),
       ],
     );
-  }
-
-  // ステータスメッセージの表示
-  Widget _buildStatusMessage() {
-    if (gameState.isGameOver) {
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Text(
-          'ゲームオーバー',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
-    } else if (gameState.isGamePaused) {
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.amber.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Text(
-          '一時停止中',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
-    } else if (!gameState.isGameStarted) {
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.blue.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Text(
-          'ゲーム準備完了',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
-    }
-
-    return const SizedBox.shrink();
   }
 
   // コントロールボタン
@@ -631,8 +579,8 @@ class _TetrisGameScreenState extends State<TetrisGameScreen> {
       decoration: BoxDecoration(
         color: AppColors.primaryColor,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black26,
             offset: Offset(0, 2),
             blurRadius: 5,
