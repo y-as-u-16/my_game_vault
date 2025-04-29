@@ -67,6 +67,7 @@ class _MemoryCardGameScreenState extends State<MemoryCardGameScreen>
 
   void _selectCard(int index) async {
     if (isProcessing) return;
+    if (index >= flipControllers.length || index >= gameState.cards.length) return; // インデックス範囲外の場合は処理しない
 
     // カードを選択
     final success = gameState.selectCard(index);
@@ -86,7 +87,7 @@ class _MemoryCardGameScreenState extends State<MemoryCardGameScreen>
 
         setState(() {
           // マッチしないカードを裏返す
-          for (int i = 0; i < gameState.cards.length; i++) {
+          for (int i = 0; i < gameState.cards.length && i < flipControllers.length; i++) {
             if (gameState.cards[i].isRevealed) {
               flipControllers[i].reverse();
             }
@@ -112,7 +113,7 @@ class _MemoryCardGameScreenState extends State<MemoryCardGameScreen>
   void _changeDifficulty(DifficultyLevel difficulty) {
     setState(() {
       gameState.changeDifficulty(difficulty);
-      _initializeCards();
+      _initializeCards(); // 新しい難易度に合わせてカードを初期化
       _startGameTimer();
     });
   }
@@ -311,6 +312,9 @@ class _MemoryCardGameScreenState extends State<MemoryCardGameScreen>
 
   Widget _buildCard(int index) {
     final card = gameState.cards[index];
+    
+    // インデックスが配列範囲内かチェック
+    final bool hasValidController = index < flipControllers.length;
 
     return GestureDetector(
       onTap: () {
@@ -318,25 +322,29 @@ class _MemoryCardGameScreenState extends State<MemoryCardGameScreen>
           _selectCard(index);
         }
       },
-      child: AnimatedBuilder(
-        animation: flipControllers[index],
-        builder: (context, child) {
-          // 回転角度の計算
-          final rotationValue = flipControllers[index].value;
-          final isReversed = card.isHidden && rotationValue == 0.0;
-          final rotation = isReversed ? 0.0 : (rotationValue * pi);
+      child: hasValidController 
+          ? AnimatedBuilder(
+              animation: flipControllers[index],
+              builder: (context, child) {
+                // 回転角度の計算
+                final rotationValue = flipControllers[index].value;
+                final isReversed = card.isHidden && rotationValue == 0.0;
+                final rotation = isReversed ? 0.0 : (rotationValue * pi);
 
-          return Transform(
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001) // パースペクティブ効果
-              ..rotateY(rotation),
-            alignment: Alignment.center,
-            child: rotationValue >= 0.5 || card.isMatched || card.isRevealed
-                ? _buildCardFront(card) // 表面
-                : _buildCardBack(), // 裏面
-          );
-        },
-      ),
+                return Transform(
+                  transform: Matrix4.identity()
+                    ..setEntry(3, 2, 0.001) // パースペクティブ効果
+                    ..rotateY(rotation),
+                  alignment: Alignment.center,
+                  child: rotationValue >= 0.5 || card.isMatched || card.isRevealed
+                      ? _buildCardFront(card) // 表面
+                      : _buildCardBack(), // 裏面
+                );
+              },
+            )
+          : card.isMatched || card.isRevealed 
+              ? _buildCardFront(card) // 表面
+              : _buildCardBack(), // 裏面 (フォールバック処理)
     );
   }
 

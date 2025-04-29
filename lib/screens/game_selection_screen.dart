@@ -27,7 +27,9 @@ class _GameSelectionScreenState extends State<GameSelectionScreen> with SingleTi
     );
     
     // 各カードのアニメーション
-    for (int i = 0; i < 6; i++) {
+    // ゲーム数を考慮して確実に6個のアニメーションを作成
+    const int numCards = 6;
+    for (int i = 0; i < numCards; i++) {
       final interval = i * 0.1;
       _cardAnimations.add(
         CurvedAnimation(
@@ -368,17 +370,22 @@ class _GameSelectionScreenState extends State<GameSelectionScreen> with SingleTi
   
   // アニメーション付きのゲームカード
   Widget _animatedGameCard(int index, Widget child) {
+    // インデックスが範囲外でないことを確認
+    if (index >= _cardAnimations.length) {
+      return child; // アニメーションがない場合、そのままカードを返す
+    }
+    
     return AnimatedBuilder(
       animation: _cardAnimations[index],
-      builder: (context, child) {
+      builder: (context, childWidget) {
         return Transform.translate(
           offset: Offset(
             0.0, 
             50 * (1.0 - _cardAnimations[index].value)
           ),
           child: Opacity(
-            opacity: _cardAnimations[index].value,
-            child: child,
+            opacity: _cardAnimations[index].value.clamp(0.0, 1.0), // 0.0〜1.0の範囲に制限
+            child: childWidget,
           ),
         );
       },

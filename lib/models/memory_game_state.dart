@@ -58,8 +58,30 @@ class MemoryGameState {
     final availableIcons = List<IconData>.from(theme.iconPairs);
     availableIcons.shuffle(); // ランダムに並び替え
     
-    // 難易度に応じたアイコンを選択
-    final selectedIcons = availableIcons.take(requiredPairs).toList();
+    // 難易度に応じたアイコンを選択（重複なく）
+    final selectedIcons = <IconData>[];
+    
+    // アイコン数が必要ペア数より少ない場合
+    if (availableIcons.length < requiredPairs) {
+      print('Warning: Not enough unique icons (${availableIcons.length}) for required pairs ($requiredPairs)');
+      
+      // まず全てのアイコンを使用
+      selectedIcons.addAll(availableIcons);
+      
+      // 残りは新しいシャッフルセットから足りない分だけ追加
+      final remainingCount = requiredPairs - selectedIcons.length;
+      final extraIcons = List<IconData>.from(theme.iconPairs);
+      extraIcons.shuffle();
+      
+      // すでに選ばれたアイコンは除外
+      extraIcons.removeWhere((icon) => selectedIcons.contains(icon));
+      
+      // 必要な数だけ追加
+      selectedIcons.addAll(extraIcons.take(remainingCount));
+    } else {
+      // 十分なアイコンがある場合は、必要な数だけ取得
+      selectedIcons.addAll(availableIcons.take(requiredPairs));
+    }
     
     // ペアを作成
     cards = [];

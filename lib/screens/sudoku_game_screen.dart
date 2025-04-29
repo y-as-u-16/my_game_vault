@@ -144,7 +144,8 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final gridSize = size.width - 32;
-    final cellSize = gridSize / 9;
+    // セルサイズを若干小さくして余裕を持たせる
+    final cellSize = (gridSize / 9) - 0.5;
     
     return Scaffold(
       appBar: AppBar(
@@ -258,8 +259,8 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
               ),
               child: Text(
                 _statusMessage,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.9),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -288,8 +289,8 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                   const SizedBox(height: 8),
                   Text(
                     '時間: ${_formatTime(_elapsedSeconds)}  ヒント: ${gameState.hintsUsed}回  ミス: ${gameState.mistakesCount}回',
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.9),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -311,7 +312,7 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                 child: Container(
                   width: gridSize,
                   height: gridSize,
-                  margin: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // 垂直方向のマージンを小さく
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: SudokuConstants.gridLineColor,
@@ -319,8 +320,11 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
                     ),
                   ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: List.generate(9, (row) {
                       return Row(
+                        mainAxisSize: MainAxisSize.max, // minからmaxに変更
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 均等に配置
                         children: List.generate(9, (col) {
                           return _buildCell(row, col, cellSize);
                         }),
@@ -463,22 +467,26 @@ class _SudokuGameScreenState extends State<SudokuGameScreen> {
           color: backgroundColor,
           border: border,
         ),
-        child: cell.isEmpty
-            ? (cell.notes.isNotEmpty
-                ? _buildNotes(cell.notes)
-                : null)
-            : Center(
-                child: Text(
-                  '${cell.value}',
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 20,
-                    fontWeight: cell.isFixed
-                        ? FontWeight.bold
-                        : FontWeight.normal,
+        child: SizedBox(
+          width: cellSize,
+          height: cellSize,
+          child: cell.isEmpty
+              ? (cell.notes.isNotEmpty
+                  ? _buildNotes(cell.notes)
+                  : null)
+              : Center(
+                  child: Text(
+                    '${cell.value}',
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 20,
+                      fontWeight: cell.isFixed
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }
